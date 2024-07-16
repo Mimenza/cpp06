@@ -6,7 +6,7 @@
 /*   By: emimenza <emimenza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:27:30 by emimenza          #+#    #+#             */
-/*   Updated: 2024/07/16 15:51:25 by emimenza         ###   ########.fr       */
+/*   Updated: 2024/07/16 16:01:17 by emimenza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void ScalarConverter::convertToChar(std::string literal)
     else
     {
         long value = std::strtol(literal.c_str(), NULL, 10);
-        if (value < std::numeric_limits<char>::min() || value > std::numeric_limits<char>::max() || literal == "nan")
+        if (value < std::numeric_limits<char>::min() || value > std::numeric_limits<char>::max() || literal == "nanf" || literal == "inff" || literal == "-inff" || literal == "nan" || literal == "inf" || literal == "-inf")
         {
             throw ConversionException();
         }
@@ -82,7 +82,8 @@ void ScalarConverter::convertToInt(std::string literal)
     char* end;
     double value = std::strtod(literal.c_str(), &end);
 
-    if ((*end != '\0' && *end != 'f') || literal == "nan") {
+    if ((*end != '\0' && *end != 'f') || literal == "nanf" || literal == "inff" || literal == "-inff" || literal == "nan" || literal == "inf" || literal == "-inf")
+    {
         throw ConversionException();
     }
 
@@ -99,9 +100,9 @@ void ScalarConverter::convertToFloat(std::string literal)
     char* end;
     float value = std::strtof(literal.c_str(), &end);
 
-    if (literal == "nan" || literal == "inf" || literal == "-inf")
+    if (literal == "nanf" || literal == "inff" || literal == "-inff")
     {
-        std::cout << "Float: nanf" << std::endl;
+        std::cout << "Float: " << literal << std::endl;
         return;
     }
 
@@ -123,8 +124,9 @@ void ScalarConverter::convertToDouble(std::string literal)
     char* end;
     double value = std::strtod(literal.c_str(), &end);
 
-    if (literal == "nan" || literal == "inf" || literal == "-inf") {
-        std::cout << "Double: nan" << std::endl;
+     if (literal == "nan" || literal == "inf" || literal == "-inf")
+    {
+        std::cout << "Double: " << literal << std::endl;
         return;
     }
 
