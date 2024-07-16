@@ -6,14 +6,14 @@
 #    By: emimenza <emimenza@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 11:56:07 by emimenza          #+#    #+#              #
-#    Updated: 2024/07/15 13:35:30 by emimenza         ###   ########.fr        #
+#    Updated: 2024/07/16 15:49:50 by emimenza         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = c++
 CFLAGS = -Wall -Wextra -Werror -std=c++98 
 RM = rm -rf
-NAME = scalarConvert
+NAME = convert
 
 SRCS = srcs/ScalarConverter.cpp\
 	   main.cpp

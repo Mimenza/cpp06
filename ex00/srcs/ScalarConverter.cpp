@@ -6,7 +6,7 @@
 /*   By: emimenza <emimenza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:27:30 by emimenza          #+#    #+#             */
-/*   Updated: 2024/07/16 14:10:46 by emimenza         ###   ########.fr       */
+/*   Updated: 2024/07/16 15:51:25 by emimenza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void ScalarConverter::convertToChar(std::string literal)
     else
     {
         long value = std::strtol(literal.c_str(), NULL, 10);
-        if (value < std::numeric_limits<char>::min() || value > std::numeric_limits<char>::max())
+        if (value < std::numeric_limits<char>::min() || value > std::numeric_limits<char>::max() || literal == "nan")
         {
             throw ConversionException();
         }
@@ -79,75 +79,65 @@ void ScalarConverter::convertToChar(std::string literal)
 
 void ScalarConverter::convertToInt(std::string literal)
 {
-    if (literal.length() == 1)
-    {
-        char c = literal[0];
-        int value = static_cast<int>(c) - '0';
-        std::cout << "int: " << value << std::endl;
-    }
-    else
-    {
-        char* end;
-        double value = strtod(literal.c_str(), &end) - '0';
+    char* end;
+    double value = std::strtod(literal.c_str(), &end);
 
-        if (std::isnan(value) || value < std::numeric_limits<int>::min() || value > std::numeric_limits<int>::max())
-        {
-            throw ConversionException();
-        }
-        std::cout << "int: " << static_cast<int>(value) << std::endl;
+    if ((*end != '\0' && *end != 'f') || literal == "nan") {
+        throw ConversionException();
     }
+
+    if (value < std::numeric_limits<int>::min() || value > std::numeric_limits<int>::max()) {
+        throw NonDisplayableException();
+    }
+
+    int intValue = static_cast<int>(value);
+    std::cout << "Int: " << intValue << std::endl;
 }
 
 void ScalarConverter::convertToFloat(std::string literal)
 {
     char* end;
-    float value;
+    float value = std::strtof(literal.c_str(), &end);
 
-    // Intentar convertir a float
-    if (literal.length() == 1 && isdigit(literal[0]))
+    if (literal == "nan" || literal == "inf" || literal == "-inf")
     {
-        // Si es un único carácter numérico, convertir directamente
-        value = static_cast<float>(literal[0] - '0');
-    }
-    else
-    {
-        value = strtof(literal.c_str(), &end); // Usar strtof para convertir a float
-
-        // Verificar si la conversión fue exitosa
-        if (end == literal.c_str() || *end != '\0' || std::isnan(value) ||
-            value < std::numeric_limits<float>::min() || value > std::numeric_limits<float>::max())
-        {
-            throw ConversionException();
-        }
+        std::cout << "Float: nanf" << std::endl;
+        return;
     }
 
-    std::cout << std::fixed << std::setprecision(1) << "float: " << value << "f" << std::endl; // Ensure 0.0f
+    if ((*end != '\0' && *end != 'f'))
+    {
+        throw ConversionException();
+    }
+
+    if ((value < std::numeric_limits<float>::min() && value != 0.0f) || 
+        value > std::numeric_limits<float>::max()) {
+        throw NonDisplayableException();
+    }
+
+    std::cout << std::fixed << std::setprecision(1) << "Float: " << value << "f" << std::endl;
 }
 
 void ScalarConverter::convertToDouble(std::string literal)
 {
     char* end;
-    double value;
+    double value = std::strtod(literal.c_str(), &end);
 
-    // Intentar convertir a double
-    if (literal.length() == 1 && isdigit(literal[0]))
-    {
-        // Si es un único carácter numérico, convertir directamente
-        value = static_cast<double>(literal[0] - '0');
-    }
-    else
-    {
-        value = strtod(literal.c_str(), &end); // Usar strtod para convertir a double
-
-        // Verificar si la conversión fue exitosa
-        if (end == literal.c_str() || *end != '\0' || std::isnan(value) ||
-            value < std::numeric_limits<double>::min() || value > std::numeric_limits<double>::max())
-        {
-            throw ConversionException();
-        }
+    if (literal == "nan" || literal == "inf" || literal == "-inf") {
+        std::cout << "Double: nan" << std::endl;
+        return;
     }
 
-    std::cout << std::fixed << std::setprecision(1) << "double: " << value << std::endl; // Ensure 0.0
+    if ((*end != '\0' && *end != 'f' && *end != 'd')) {
+        throw ConversionException();
+    }
+
+    if ((value < std::numeric_limits<double>::min() && value != 0.0) || 
+        value > std::numeric_limits<double>::max()) {
+        throw NonDisplayableException();
+    }
+
+    std::cout << std::fixed << std::setprecision(1) << "Double: " << value << std::endl;
 }
 
 void ScalarConverter::convert(std::string &literal)
@@ -176,4 +166,6 @@ void ScalarConverter::convert(std::string &literal)
     } catch (const std::exception &e) {
         std::cerr << "double: " << e.what() << std::endl;
     }
+
+    //std::cout << literal << std::endl;
 }
