@@ -6,7 +6,7 @@
 /*   By: emimenza <emimenza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:27:27 by emimenza          #+#    #+#             */
-/*   Updated: 2024/07/16 12:25:57 by emimenza         ###   ########.fr       */
+/*   Updated: 2024/07/16 14:05:54 by emimenza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <cerrno>
 # include <cmath>
 # include <sstream>
+# include <iomanip>
 
 class ScalarConverter
 {
