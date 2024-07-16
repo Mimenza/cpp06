@@ -6,7 +6,7 @@
 /*   By: emimenza <emimenza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:32:44 by emimenza          #+#    #+#             */
-/*   Updated: 2024/07/15 13:46:33 by emimenza         ###   ########.fr       */
+/*   Updated: 2024/07/16 12:56:02 by emimenza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ int main (void)
     ScalarConverter sc;
     std::string patata;
 
-    patata = 'c';
+    patata = "c";
     sc.convert(patata);
-    
-    // patata = 54;
-    // sc.convert(patata);
-
-    // patata = 56.7f;
-    // sc.convert(patata);
-
-    // patata = 89.5;
-    // sc.convert(patata);
+    std::cout << std::endl;
+    patata = "110";
+    sc.convert(patata);
+    std::cout << std::endl;
+    patata = "120.7f";
+    sc.convert(patata);
+    std::cout << std::endl;
+    patata = "89.5";
+    sc.convert(patata);
 
 }
