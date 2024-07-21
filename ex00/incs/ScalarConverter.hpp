@@ -6,42 +6,32 @@
 /*   By: emimenza <emimenza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 11:27:27 by emimenza          #+#    #+#             */
-/*   Updated: 2024/07/16 14:05:54 by emimenza         ###   ########.fr       */
+/*   Updated: 2024/07/21 19:34:27 by emimenza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCALARCONVERTER_HPP
 # define SCALARCONVERTER_HPP
 
-# include <iostream>
-# include <string>
-# include <exception>
-# include <limits>
-# include <cstdlib>
-# include <cerrno>
-# include <cmath>
-# include <sstream>
-# include <iomanip>
+#include <cmath>
+#include <cstdlib>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
+#include <limits>
+#include <string>
 
 class ScalarConverter
 {
-    private:
-        static void convertToChar(std::string literal);
-        static void convertToInt(std::string literal);
-        static void convertToFloat(std::string literal);
-        static void convertToDouble(std::string literal);
-
 
     public:
         ScalarConverter();
         ScalarConverter(ScalarConverter &source);
-        ScalarConverter& operator=(ScalarConverter &source);
-        ~ScalarConverter();
+        virtual ~ScalarConverter(void);
 
-        static void convert(std::string &literal);
-        class ConversionException;
-        class NonDisplayableException;
-        
+        ScalarConverter &operator=(ScalarConverter &source);
+
+        static void convert(std::string const &literal);
 };
 
 #endif
